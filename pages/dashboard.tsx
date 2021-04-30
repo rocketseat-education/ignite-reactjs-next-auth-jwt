@@ -5,11 +5,10 @@ import { AuthContext } from "../contexts/AuthContext"
 import { setupAPIClient } from "../services/api";
 import { api } from "../services/apiClient";
 import { withSSRAuth } from "../utils/withSSRAuth"
-import { useCan } from "../hooks/useCan";
 import { Can } from "../components/Can";
 
 export default function Dashboard() {
-  const { user, isAuthenticated } = useContext(AuthContext)
+  const { user, signOut, isAuthenticated } = useContext(AuthContext)
 
   useEffect(() => {
     api.get('/me')
@@ -19,6 +18,8 @@ export default function Dashboard() {
   return (
     <>
       <h1>Dashboard: {user?.email}</h1>
+
+      <button onClick={signOut}>Sign out</button>
 
       <Can permissions={['metrics.list']}>
         <div>Métricas</div>
